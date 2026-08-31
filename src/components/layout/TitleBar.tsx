@@ -79,7 +79,7 @@ export const TitleBar: React.FC<TitleBarProps> = ({
       {/* Left: App Logo & Title */}
       <div className="flex items-center gap-2 pointer-events-none" data-tauri-drag-region>
         <div className="w-6 h-6 rounded-md bg-gradient-to-tr from-violet-600 to-indigo-500 flex items-center justify-center text-white shadow-sm shadow-violet-500/30">
-          <Video className="w-3.5 h-3.5" />
+          <Video className="w-3.5 h-3.5" aria-hidden="true" />
         </div>
         <span className="text-xs font-semibold text-slate-800 dark:text-slate-200 tracking-wide">
           Free Video Downloader
@@ -93,62 +93,74 @@ export const TitleBar: React.FC<TitleBarProps> = ({
       <div className="flex items-center gap-1">
         {/* Open Download Directory Button */}
         <button
+          type="button"
           onClick={onOpenFolder}
           title="打开默认下载目录"
-          className="w-7 h-7 flex items-center justify-center rounded-md text-slate-500 hover:text-slate-800 dark:text-slate-400 dark:hover:text-slate-100 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
+          aria-label="打开默认下载目录"
+          className="w-7 h-7 flex items-center justify-center rounded-md text-slate-500 hover:text-slate-800 dark:text-slate-400 dark:hover:text-slate-100 hover:bg-slate-100 dark:hover:bg-slate-800 focus-visible:ring-2 focus-visible:ring-violet-500 focus-visible:outline-none transition-colors"
         >
-          <FolderOpen className="w-3.5 h-3.5" />
+          <FolderOpen className="w-3.5 h-3.5" aria-hidden="true" />
         </button>
 
         {/* Theme Switcher Button */}
         <button
+          type="button"
           onClick={onToggleTheme}
           title={isDark ? "切换为浅色主题" : "切换为深色主题"}
-          className="w-7 h-7 flex items-center justify-center rounded-md text-slate-500 hover:text-slate-800 dark:text-slate-400 dark:hover:text-slate-100 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
+          aria-label={isDark ? "切换为浅色主题" : "切换为深色主题"}
+          className="w-7 h-7 flex items-center justify-center rounded-md text-slate-500 hover:text-slate-800 dark:text-slate-400 dark:hover:text-slate-100 hover:bg-slate-100 dark:hover:bg-slate-800 focus-visible:ring-2 focus-visible:ring-violet-500 focus-visible:outline-none transition-colors"
         >
           {isDark ? (
-            <Sun className="w-3.5 h-3.5 text-amber-400" />
+            <Sun className="w-3.5 h-3.5 text-amber-400" aria-hidden="true" />
           ) : (
-            <Moon className="w-3.5 h-3.5 text-slate-600" />
+            <Moon className="w-3.5 h-3.5 text-slate-600" aria-hidden="true" />
           )}
         </button>
 
         {/* Settings Button */}
         <button
+          type="button"
           onClick={onOpenSettings}
-          title="设置"
-          className="w-7 h-7 flex items-center justify-center rounded-md text-slate-500 hover:text-slate-800 dark:text-slate-400 dark:hover:text-slate-100 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors mr-2"
+          title="偏好设置"
+          aria-label="偏好设置"
+          className="w-7 h-7 flex items-center justify-center rounded-md text-slate-500 hover:text-slate-800 dark:text-slate-400 dark:hover:text-slate-100 hover:bg-slate-100 dark:hover:bg-slate-800 focus-visible:ring-2 focus-visible:ring-violet-500 focus-visible:outline-none transition-colors mr-2"
         >
-          <Settings className="w-3.5 h-3.5" />
+          <Settings className="w-3.5 h-3.5" aria-hidden="true" />
         </button>
 
-        <div className="h-4 w-[1px] bg-slate-200 dark:bg-slate-800 mr-1" />
+        <div className="h-4 w-[1px] bg-slate-200 dark:bg-slate-800 mr-1" aria-hidden="true" />
 
         {/* Minimize Button */}
         <button
+          type="button"
           onClick={handleMinimize}
-          title="最小化"
-          className="w-7 h-7 flex items-center justify-center rounded-md text-slate-500 hover:text-slate-800 dark:text-slate-400 dark:hover:text-slate-100 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
+          title="最小化窗口"
+          aria-label="最小化窗口"
+          className="w-7 h-7 flex items-center justify-center rounded-md text-slate-500 hover:text-slate-800 dark:text-slate-400 dark:hover:text-slate-100 hover:bg-slate-100 dark:hover:bg-slate-800 focus-visible:ring-2 focus-visible:ring-violet-500 focus-visible:outline-none transition-colors"
         >
-          <Minus className="w-3.5 h-3.5" />
+          <Minus className="w-3.5 h-3.5" aria-hidden="true" />
         </button>
 
         {/* Maximize / Restore Button */}
         <button
+          type="button"
           onClick={handleToggleMaximize}
-          title={isMaximized ? "还原" : "最大化"}
-          className="w-7 h-7 flex items-center justify-center rounded-md text-slate-500 hover:text-slate-800 dark:text-slate-400 dark:hover:text-slate-100 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
+          title={isMaximized ? "还原窗口" : "最大化窗口"}
+          aria-label={isMaximized ? "还原窗口" : "最大化窗口"}
+          className="w-7 h-7 flex items-center justify-center rounded-md text-slate-500 hover:text-slate-800 dark:text-slate-400 dark:hover:text-slate-100 hover:bg-slate-100 dark:hover:bg-slate-800 focus-visible:ring-2 focus-visible:ring-violet-500 focus-visible:outline-none transition-colors"
         >
-          <Square className="w-3 h-3" />
+          <Square className="w-3 h-3" aria-hidden="true" />
         </button>
 
         {/* Close Button */}
         <button
+          type="button"
           onClick={handleClose}
-          title="关闭"
-          className="w-7 h-7 flex items-center justify-center rounded-md text-slate-500 hover:text-white hover:bg-rose-500 dark:text-slate-400 dark:hover:bg-rose-600 transition-colors"
+          title="关闭窗口"
+          aria-label="关闭窗口"
+          className="w-7 h-7 flex items-center justify-center rounded-md text-slate-500 hover:text-white hover:bg-rose-500 dark:text-slate-400 dark:hover:bg-rose-600 focus-visible:ring-2 focus-visible:ring-rose-500 focus-visible:outline-none transition-colors"
         >
-          <X className="w-3.5 h-3.5" />
+          <X className="w-3.5 h-3.5" aria-hidden="true" />
         </button>
       </div>
     </header>

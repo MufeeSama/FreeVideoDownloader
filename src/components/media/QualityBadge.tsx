@@ -29,8 +29,9 @@ export const QualityBadge: React.FC<QualityBadgeProps> = ({
   return (
     <button
       type="button"
+      aria-pressed={selected}
       onClick={onClick}
-      className={`px-3 py-1.5 rounded-xl text-xs font-semibold border transition-all flex items-center gap-1.5 bg-gradient-to-r ${getBadgeStyle()} ${
+      className={`px-3 py-1.5 rounded-xl text-xs font-semibold border focus-visible:ring-2 focus-visible:ring-violet-500 focus-visible:ring-offset-2 focus-visible:outline-none transition-transform flex items-center gap-1.5 bg-gradient-to-r ${getBadgeStyle()} ${
         selected
           ? "ring-2 ring-violet-500 scale-105 shadow-md shadow-violet-500/25 font-bold"
           : "hover:scale-[1.02]"
@@ -38,7 +39,7 @@ export const QualityBadge: React.FC<QualityBadgeProps> = ({
     >
       <span>{type}</span>
       {sizeText && (
-        <span className="text-[10px] font-mono opacity-80 font-normal">
+        <span className="text-[10px] font-mono tabular-nums opacity-80 font-normal">
           ({sizeText})
         </span>
       )}
