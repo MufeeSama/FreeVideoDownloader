@@ -140,7 +140,7 @@ export default function App() {
   };
 
   return (
-    <div className="flex flex-col h-screen w-screen bg-slate-50 dark:bg-[#090d16] text-slate-900 dark:text-slate-100 overflow-hidden font-sans select-none">
+    <div className="flex flex-col h-screen w-screen bg-slate-50 dark:bg-[#0b0f19] text-slate-900 dark:text-slate-100 overflow-hidden font-sans select-none ambient-bg">
       {/* Hidden main h1 for screen readers and SEO semantics */}
       <h1 className="sr-only">Free Video Downloader - 社交平台无水印短视频图集下载器</h1>
 
@@ -154,17 +154,17 @@ export default function App() {
       />
 
       {/* Main Content Area */}
-      <main className="flex-1 overflow-y-auto pt-14 pb-8 px-6 max-w-5xl w-full mx-auto space-y-6">
+      <main className="flex-1 overflow-y-auto pt-16 pb-8 px-6 max-w-5xl w-full mx-auto space-y-6">
         {/* Navigation Tabs */}
         <nav aria-label="页面功能导航" className="flex items-center justify-between">
-          <div className="flex items-center gap-1 p-1 rounded-2xl bg-slate-200/60 dark:bg-slate-800/60 backdrop-blur-md border border-slate-200/50 dark:border-slate-700/50">
+          <div className="flex items-center gap-1.5 p-1 rounded-2xl bg-slate-200/50 dark:bg-slate-800/50 backdrop-blur-xl border border-slate-200/50 dark:border-slate-700/50">
             <button
               type="button"
               aria-pressed={activeTab === "downloader"}
               onClick={() => setActiveTab("downloader")}
-              className={`px-4 py-2 rounded-xl text-xs font-semibold flex items-center gap-1.5 focus-visible:ring-2 focus-visible:ring-violet-500 focus-visible:outline-none transition-colors ${
+              className={`px-4 py-2 rounded-xl text-xs font-semibold flex items-center gap-1.5 active:scale-95 focus-visible:ring-2 focus-visible:ring-indigo-500 focus-visible:outline-none transition-all ${
                 activeTab === "downloader"
-                  ? "bg-white dark:bg-slate-900 text-violet-600 dark:text-violet-400 shadow-sm"
+                  ? "bg-white dark:bg-slate-900 text-indigo-600 dark:text-indigo-400 shadow-sm"
                   : "text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200"
               }`}
             >
@@ -175,9 +175,9 @@ export default function App() {
               type="button"
               aria-pressed={activeTab === "history"}
               onClick={() => setActiveTab("history")}
-              className={`px-4 py-2 rounded-xl text-xs font-semibold flex items-center gap-1.5 focus-visible:ring-2 focus-visible:ring-violet-500 focus-visible:outline-none transition-colors ${
+              className={`px-4 py-2 rounded-xl text-xs font-semibold flex items-center gap-1.5 active:scale-95 focus-visible:ring-2 focus-visible:ring-indigo-500 focus-visible:outline-none transition-all ${
                 activeTab === "history"
-                  ? "bg-white dark:bg-slate-900 text-violet-600 dark:text-violet-400 shadow-sm"
+                  ? "bg-white dark:bg-slate-900 text-indigo-600 dark:text-indigo-400 shadow-sm"
                   : "text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200"
               }`}
             >
@@ -195,7 +195,7 @@ export default function App() {
             <div
               role="status"
               aria-live="polite"
-              className="flex items-center gap-2 px-3 py-1.5 rounded-xl bg-violet-50 dark:bg-violet-950/60 border border-violet-200/60 dark:border-violet-800/60 text-violet-600 dark:text-violet-400 text-xs font-semibold"
+              className="flex items-center gap-2 px-3.5 py-1.5 rounded-xl bg-indigo-50 dark:bg-indigo-950/60 border border-indigo-200/60 dark:border-indigo-800/60 text-indigo-600 dark:text-indigo-400 text-xs font-semibold shadow-sm"
             >
               <Download className="w-3.5 h-3.5 animate-bounce" aria-hidden="true" />
               <span className="tabular-nums">正在下载 {tasks.length} 个任务</span>

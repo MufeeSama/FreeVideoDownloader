@@ -6,6 +6,7 @@ import {
   Sparkles,
   Loader2,
   Layers,
+  CornerDownLeft,
 } from "lucide-react";
 
 interface UrlInputBoxProps {
@@ -35,28 +36,28 @@ export const UrlInputBox: React.FC<UrlInputBoxProps> = ({
   };
 
   const platforms = [
-    { name: "抖音", color: "from-black to-slate-800" },
-    { name: "TikTok", color: "from-cyan-500 to-pink-500" },
-    { name: "小红书", color: "from-red-500 to-rose-600" },
-    { name: "快手", color: "from-amber-500 to-orange-500" },
-    { name: "B站", color: "from-blue-400 to-pink-400" },
-    { name: "Instagram", color: "from-purple-500 to-pink-500" },
+    { name: "抖音", dot: "bg-rose-500" },
+    { name: "TikTok", dot: "bg-cyan-400" },
+    { name: "小红书", dot: "bg-red-500" },
+    { name: "快手", dot: "bg-amber-500" },
+    { name: "B站", dot: "bg-sky-400" },
+    { name: "Instagram", dot: "bg-fuchsia-500" },
   ];
 
   return (
-    <div className="w-full glass-panel p-6 rounded-3xl shadow-xl shadow-slate-200/50 dark:shadow-none border border-slate-200/80 dark:border-slate-800/80 transition-all">
+    <div className="w-full glass-panel p-6 rounded-3xl shadow-xl transition-shadow border border-slate-200/80 dark:border-slate-800/80">
       {/* Header Info & Mode Switch */}
       <div className="flex items-center justify-between mb-4">
-        <div className="flex items-center gap-2">
-          <div className="w-8 h-8 rounded-xl bg-violet-100 dark:bg-violet-950/80 flex items-center justify-center text-violet-600 dark:text-violet-400">
+        <div className="flex items-center gap-3">
+          <div className="w-9 h-9 rounded-xl bg-indigo-50 dark:bg-indigo-950/70 border border-indigo-200/50 dark:border-indigo-800/50 flex items-center justify-center text-indigo-600 dark:text-indigo-400 shadow-sm">
             <Link2 className="w-4 h-4" aria-hidden="true" />
           </div>
           <div>
-            <h2 className="text-base font-bold text-slate-900 dark:text-slate-100">
-              短视频 / 图集解析提取
+            <h2 className="text-sm font-bold text-slate-900 dark:text-slate-100 tracking-tight">
+              短视频与高清图集解析
             </h2>
-            <p className="text-xs text-slate-500 dark:text-slate-400">
-              支持抖音、小红书、TikTok、快手等多平台分享链接或复制文案
+            <p className="text-[11px] text-slate-500 dark:text-slate-400">
+              粘贴包含视频链接的分享文案或直链，秒级提取无水印资源
             </p>
           </div>
         </div>
@@ -65,10 +66,10 @@ export const UrlInputBox: React.FC<UrlInputBoxProps> = ({
           type="button"
           aria-pressed={isBatchMode}
           onClick={() => setIsBatchMode(!isBatchMode)}
-          className={`px-3 py-1.5 rounded-xl text-xs font-medium flex items-center gap-1.5 focus-visible:ring-2 focus-visible:ring-violet-500 focus-visible:outline-none transition-colors ${
+          className={`px-3 py-1.5 rounded-xl text-xs font-medium flex items-center gap-1.5 active:scale-95 focus-visible:ring-2 focus-visible:ring-indigo-500 focus-visible:outline-none transition-all ${
             isBatchMode
-              ? "bg-violet-600 text-white shadow-md shadow-violet-500/30"
-              : "bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700"
+              ? "bg-indigo-600 text-white shadow-sm shadow-indigo-600/30"
+              : "bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-200/70 dark:hover:bg-slate-700/70"
           }`}
         >
           <Layers className="w-3.5 h-3.5" aria-hidden="true" />
@@ -76,11 +77,11 @@ export const UrlInputBox: React.FC<UrlInputBoxProps> = ({
         </button>
       </div>
 
-      {/* Input Field */}
+      {/* Input Field with subtle inner shadow & focus glow */}
       <label htmlFor="video-url-input" className="sr-only">
         短视频分享链接输入框
       </label>
-      <div className="relative rounded-2xl border-2 border-slate-200 dark:border-slate-800 focus-within:border-violet-500 dark:focus-within:border-violet-500 transition-colors bg-white/50 dark:bg-slate-900/50 overflow-hidden">
+      <div className="relative rounded-2xl border-2 border-slate-200/90 dark:border-slate-800 focus-within:border-indigo-500 dark:focus-within:border-indigo-500 focus-within:shadow-[0_0_20px_-4px_rgba(99,102,241,0.25)] transition-all bg-white/60 dark:bg-slate-900/60 overflow-hidden">
         {isBatchMode ? (
           <textarea
             id="video-url-input"
@@ -105,7 +106,7 @@ export const UrlInputBox: React.FC<UrlInputBoxProps> = ({
             autoComplete="off"
             autoCapitalize="off"
             spellCheck={false}
-            placeholder="在此粘贴包含视频链接的分享文本（例如：3.02 复制打开抖音… https://v.douyin.com/…）"
+            placeholder="在此粘贴分享文案（如：3.02 复制打开抖音… https://v.douyin.com/…）"
             className="w-full px-4 py-3.5 bg-transparent text-sm text-slate-900 dark:text-slate-100 placeholder:text-slate-400 dark:placeholder:text-slate-500 focus:outline-none"
           />
         )}
@@ -113,15 +114,16 @@ export const UrlInputBox: React.FC<UrlInputBoxProps> = ({
 
       {/* Action Buttons & Platform Badges */}
       <div className="flex flex-wrap items-center justify-between gap-3 mt-4">
-        {/* Supported Platform Badges */}
+        {/* Supported Platform Badges with colored indicator dot */}
         <div className="flex items-center gap-1.5 flex-wrap">
           <span className="text-[11px] text-slate-400 font-medium mr-1">支持平台:</span>
           {platforms.map((p) => (
             <span
               key={p.name}
-              className="text-[11px] font-medium px-2 py-0.5 rounded-md bg-slate-100 dark:bg-slate-800/80 text-slate-600 dark:text-slate-300 border border-slate-200/50 dark:border-slate-700/50"
+              className="text-[11px] font-medium px-2.5 py-1 rounded-lg bg-slate-100/80 dark:bg-slate-800/80 text-slate-600 dark:text-slate-300 border border-slate-200/50 dark:border-slate-700/50 flex items-center gap-1.5"
             >
-              {p.name}
+              <span className={`w-1.5 h-1.5 rounded-full ${p.dot}`} aria-hidden="true" />
+              <span>{p.name}</span>
             </span>
           ))}
         </div>
@@ -134,7 +136,7 @@ export const UrlInputBox: React.FC<UrlInputBoxProps> = ({
               onClick={onClear}
               disabled={isLoading}
               aria-label="清空输入框内容"
-              className="px-3 py-2 rounded-xl text-xs font-medium text-slate-500 hover:text-slate-800 dark:text-slate-400 dark:hover:text-slate-100 hover:bg-slate-100 dark:hover:bg-slate-800 focus-visible:ring-2 focus-visible:ring-violet-500 focus-visible:outline-none flex items-center gap-1.5 transition-colors disabled:opacity-50"
+              className="px-3 py-2 rounded-xl text-xs font-medium text-slate-500 hover:text-slate-800 dark:text-slate-400 dark:hover:text-slate-100 hover:bg-slate-100/80 dark:hover:bg-slate-800/80 active:scale-95 focus-visible:ring-2 focus-visible:ring-indigo-500 focus-visible:outline-none flex items-center gap-1.5 transition-colors disabled:opacity-50"
             >
               <Trash2 className="w-3.5 h-3.5" aria-hidden="true" />
               <span>清空</span>
@@ -146,7 +148,7 @@ export const UrlInputBox: React.FC<UrlInputBoxProps> = ({
             onClick={onPaste}
             disabled={isLoading}
             aria-label="从剪贴板粘贴文本"
-            className="px-3.5 py-2 rounded-xl text-xs font-medium text-slate-700 dark:text-slate-200 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 focus-visible:ring-2 focus-visible:ring-violet-500 focus-visible:outline-none flex items-center gap-1.5 transition-colors disabled:opacity-50"
+            className="px-3.5 py-2 rounded-xl text-xs font-medium text-slate-700 dark:text-slate-200 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200/80 dark:hover:bg-slate-700/80 active:scale-95 focus-visible:ring-2 focus-visible:ring-indigo-500 focus-visible:outline-none flex items-center gap-1.5 transition-colors disabled:opacity-50"
           >
             <Clipboard className="w-3.5 h-3.5" aria-hidden="true" />
             <span>粘贴剪贴板</span>
@@ -157,17 +159,20 @@ export const UrlInputBox: React.FC<UrlInputBoxProps> = ({
             onClick={onParse}
             disabled={isLoading || !value.trim()}
             aria-label={isLoading ? "正在解析提取视频资源" : "解析提取视频资源"}
-            className="px-6 py-2 rounded-xl text-xs font-semibold text-white bg-gradient-to-r from-violet-600 to-indigo-600 hover:from-violet-500 hover:to-indigo-500 focus-visible:ring-2 focus-visible:ring-violet-500 focus-visible:ring-offset-2 focus-visible:outline-none shadow-md shadow-violet-500/25 flex items-center gap-2 transition-transform active:scale-95 disabled:opacity-50 disabled:pointer-events-none glow-accent"
+            className="px-5 py-2 rounded-xl text-xs font-semibold text-white bg-gradient-to-r from-indigo-600 via-violet-600 to-indigo-600 hover:from-indigo-500 hover:to-violet-500 active:scale-[0.98] focus-visible:ring-2 focus-visible:ring-indigo-500 focus-visible:ring-offset-2 focus-visible:outline-none shadow-md shadow-indigo-500/25 flex items-center gap-2 transition-all disabled:opacity-50 disabled:pointer-events-none glow-accent"
           >
             {isLoading ? (
               <>
-                <Loader2 className="w-4 h-4 animate-spin" aria-hidden="true" />
+                <Loader2 className="w-3.5 h-3.5 animate-spin" aria-hidden="true" />
                 <span>解析中…</span>
               </>
             ) : (
               <>
-                <Sparkles className="w-4 h-4" aria-hidden="true" />
+                <Sparkles className="w-3.5 h-3.5" aria-hidden="true" />
                 <span>解析提取</span>
+                {!isBatchMode && (
+                  <CornerDownLeft className="w-3 h-3 opacity-60 ml-0.5" aria-hidden="true" />
+                )}
               </>
             )}
           </button>
