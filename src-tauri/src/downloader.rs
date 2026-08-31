@@ -152,7 +152,6 @@ impl DownloadManager {
         let mut stream = response.bytes_stream();
         let mut last_emit_time = Instant::now();
         let mut bytes_since_last_emit: u64 = 0;
-        let mut speed: f64 = 0.0;
 
         while let Some(chunk_result) = stream.next().await {
             if *cancel_rx.borrow() {
@@ -179,9 +178,10 @@ impl DownloadManager {
             let now = Instant::now();
             let elapsed = now.duration_since(last_emit_time);
             if elapsed >= Duration::from_millis(150) {
-                speed = (bytes_since_last_emit as f64) / elapsed.as_secs_f64();
+                let speed = (bytes_since_last_emit as f64) / elapsed.as_secs_f64();
                 bytes_since_last_emit = 0;
                 last_emit_time = now;
+
 
                 let progress = if total_bytes > 0 {
                     (downloaded_bytes as f64 / total_bytes as f64) * 100.0
