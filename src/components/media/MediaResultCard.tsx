@@ -260,11 +260,13 @@ export const MediaResultCard: React.FC<MediaResultCardProps> = ({
         isOpen={isVideoModalOpen}
         onClose={() => setIsVideoModalOpen(false)}
         videoUrl={activeVideoUrl}
+        platform={result.platform}
         title={result.title}
         onDownload={() =>
           onDownloadVideo(activeVideoUrl, currentQuality?.type || "1080p")
         }
       />
+
 
       {/* Image Gallery Modal */}
       {result.pics && (

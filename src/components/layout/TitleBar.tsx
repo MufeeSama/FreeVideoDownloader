@@ -18,6 +18,7 @@ interface TitleBarProps {
   onToggleTheme: () => void;
   onOpenSettings: () => void;
   onOpenFolder: () => void;
+  onClose?: () => void;
 }
 
 export const TitleBar: React.FC<TitleBarProps> = ({
@@ -25,6 +26,7 @@ export const TitleBar: React.FC<TitleBarProps> = ({
   onToggleTheme,
   onOpenSettings,
   onOpenFolder,
+  onClose,
 }) => {
   const [isMaximized, setIsMaximized] = useState(false);
 
@@ -64,12 +66,17 @@ export const TitleBar: React.FC<TitleBarProps> = ({
   };
 
   const handleClose = async () => {
+    if (onClose) {
+      onClose();
+      return;
+    }
     try {
       await getCurrentWindow().close();
     } catch (e) {
       console.warn(e);
     }
   };
+
 
   return (
     <header

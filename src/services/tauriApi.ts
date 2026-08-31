@@ -15,6 +15,15 @@ export const tauriApi = {
     return await invoke<VideoParseResult>("parse_video", { rawInput });
   },
 
+  // 获取视频代理播放直链 (解除防盗链并支持 Range 拖拽快进)
+  async getVideoProxyUrl(url: string, platform: string = "douyin"): Promise<string> {
+    try {
+      return await invoke<string>("get_video_proxy_url", { url, platform });
+    } catch {
+      return url;
+    }
+  },
+
   // 启动下载任务
   async startDownload(params: StartDownloadParams): Promise<DownloadTaskRecord> {
     return await invoke<DownloadTaskRecord>("start_download", { params });

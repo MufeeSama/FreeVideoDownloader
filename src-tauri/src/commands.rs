@@ -32,6 +32,29 @@ pub async fn parse_video(raw_input: String) -> Result<VideoParseResult, String> 
 }
 
 #[tauri::command]
+pub fn get_video_proxy_url(url: String, platform: String) -> Result<String, String> {
+    let port = crate::proxy::get_proxy_port();
+    if port == 0 {
+        return Ok(url);
+    }
+    // Hex percent-encode url
+    let encoded: String = url
+        .bytes()
+        .map(|b| match b {
+            b'a'..=b'z' | b'A'..=b'Z' | b'0'..=b'9' | b'-' | b'_' | b'.' | b'~' => {
+                (b as char).to_string()
+            }
+            _ => format!("%{:02X}", b),
+        })
+        .collect();
+
+    Ok(format!(
+        "http://127.0.0.1:{}/proxy?url={}&platform={}",
+        port, encoded, platform
+    ))
+}
+
+#[tauri::command]
 pub async fn start_download(
     app: AppHandle,
     state: State<'_, AppState>,

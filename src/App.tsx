@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useState, useEffect, useCallback } from "react";
+import { getCurrentWindow } from "@tauri-apps/api/window";
 import { TitleBar } from "./components/layout/TitleBar";
 import { UrlInputBox } from "./components/parser/UrlInputBox";
 import { ClipboardModal } from "./components/parser/ClipboardModal";
@@ -6,6 +7,7 @@ import { MediaResultCard } from "./components/media/MediaResultCard";
 import { DownloadQueue } from "./components/download/DownloadQueue";
 import { HistoryList } from "./components/download/HistoryList";
 import { SettingsModal } from "./components/settings/SettingsModal";
+import { ExitConfirmModal } from "./components/layout/ExitConfirmModal";
 import { useTheme } from "./hooks/useTheme";
 import { useClipboard } from "./hooks/useClipboard";
 import { useDownloadManager } from "./hooks/useDownloadManager";
@@ -20,6 +22,7 @@ export default function App() {
   const [isParsing, setIsParsing] = useState(false);
   const [parseResult, setParseResult] = useState<VideoParseResult | null>(null);
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
+  const [isExitModalOpen, setIsExitModalOpen] = useState(false);
   const [activeTab, setActiveTab] = useState<"downloader" | "history">("downloader");
 
   const {
@@ -36,6 +39,55 @@ export default function App() {
     clearDetected,
     pasteFromClipboard,
   } = useClipboard(true);
+
+  const activeDownloadCount = tasks.filter(
+    (t) => t.status === "downloading" || t.status === "paused"
+  ).length;
+
+  const isBusy = isParsing || activeDownloadCount > 0;
+
+  // 拦截应用退出，如果有正在进行的任务则弹窗二次确认
+  const handleRequestClose = useCallback(async () => {
+    if (isBusy) {
+      setIsExitModalOpen(true);
+    } else {
+      try {
+        await getCurrentWindow().close();
+      } catch (e) {
+        console.warn(e);
+      }
+    }
+  }, [isBusy]);
+
+
+  const handleConfirmExit = async () => {
+    try {
+      await getCurrentWindow().destroy();
+    } catch {
+      await getCurrentWindow().close();
+    }
+  };
+
+  useEffect(() => {
+    let unlisten: (() => void) | undefined;
+    const registerCloseListener = async () => {
+      try {
+        const appWindow = getCurrentWindow();
+        unlisten = await appWindow.onCloseRequested((event) => {
+          if (isBusy) {
+            event.preventDefault();
+            setIsExitModalOpen(true);
+          }
+        });
+      } catch (e) {
+        console.warn("Failed to listen onCloseRequested:", e);
+      }
+    };
+    registerCloseListener();
+    return () => {
+      if (unlisten) unlisten();
+    };
+  }, [isBusy]);
 
   // 执行短视频链接解析
   const handleParse = async (urlToParse?: string) => {
@@ -151,6 +203,7 @@ export default function App() {
         onToggleTheme={toggleTheme}
         onOpenSettings={() => setIsSettingsOpen(true)}
         onOpenFolder={handleOpenDownloadFolder}
+        onClose={handleRequestClose}
       />
 
       {/* Main Content Area */}
@@ -257,6 +310,15 @@ export default function App() {
         isOpen={isSettingsOpen}
         onClose={() => setIsSettingsOpen(false)}
         onThemeChange={(newTheme) => setTheme(newTheme)}
+      />
+
+      {/* Exit Confirmation Modal */}
+      <ExitConfirmModal
+        isOpen={isExitModalOpen}
+        activeCount={activeDownloadCount}
+        isParsing={isParsing}
+        onConfirm={handleConfirmExit}
+        onCancel={() => setIsExitModalOpen(false)}
       />
 
       {/* Sonner Toaster */}
