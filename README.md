@@ -84,7 +84,7 @@ FreeVideoDownloader/
 ### 安装与运行
 ```bash
 # 1. 克隆项目
-git clone https://github.com/your-username/FreeVideoDownloader.git
+git clone https://github.com/MufeeSama/FreeVideoDownloader.git
 cd FreeVideoDownloader
 
 # 2. 安装前端依赖
