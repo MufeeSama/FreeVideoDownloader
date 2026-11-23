@@ -20,3 +20,7 @@ lerna-debug.log*
 *.njsproj
 *.sln
 *.sw?
+
+# Local tooling & build artifacts
+.playwright-mcp/
+release/
