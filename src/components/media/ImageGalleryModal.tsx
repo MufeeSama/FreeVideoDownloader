@@ -36,18 +36,18 @@ export const ImageGalleryModal: React.FC<ImageGalleryModalProps> = ({
     <div
       role="dialog"
       aria-modal="true"
-      aria-label="图集高清画廊预览"
-      className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/85 backdrop-blur-md animate-fade-in"
+      aria-label="图集画廊预览"
+      className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/75 animate-fade-in"
     >
-      <div className="relative w-full max-w-4xl glass-panel bg-slate-900/95 rounded-3xl overflow-hidden shadow-2xl border border-slate-700/60 flex flex-col max-h-[92vh]">
+      <div className="relative w-full max-w-4xl film-panel rounded-xl overflow-hidden shadow-2xl border border-[var(--card-border)] flex flex-col max-h-[92vh]">
         {/* Header */}
-        <div className="flex items-center justify-between px-5 py-3.5 border-b border-slate-800 bg-slate-900/80">
+        <div className="flex items-center justify-between px-4 py-2.5 border-b border-[var(--card-border)] bg-[var(--raised-bg)]">
           <div className="flex items-center gap-2 truncate pr-4">
-            <Images className="w-4 h-4 text-violet-400 shrink-0" aria-hidden="true" />
-            <h3 className="text-sm font-semibold text-slate-100 truncate">
+            <Images className="w-3.5 h-3.5 text-amber-600 dark:text-amber-500 shrink-0" aria-hidden="true" />
+            <h3 className="text-xs font-medium text-[var(--text-primary)] truncate">
               {title}
             </h3>
-            <span className="text-xs px-2 py-0.5 rounded-full bg-slate-800 text-slate-300 font-mono tabular-nums">
+            <span className="text-[10px] px-1.5 py-0.2 rounded bg-[var(--card-bg)] text-[var(--text-muted)] border border-[var(--card-border)] font-mono tabular-nums">
               {currentIndex + 1} / {pics.length}
             </span>
           </div>
@@ -55,18 +55,18 @@ export const ImageGalleryModal: React.FC<ImageGalleryModalProps> = ({
             type="button"
             onClick={onClose}
             aria-label="关闭画廊预览"
-            className="w-8 h-8 rounded-full flex items-center justify-center text-slate-400 hover:text-white hover:bg-slate-800 focus-visible:ring-2 focus-visible:ring-violet-500 focus-visible:outline-none transition-colors"
+            className="w-6 h-6 rounded flex items-center justify-center text-[var(--text-muted)] hover:text-[var(--text-primary)] hover:bg-[var(--card-bg)] transition-colors"
           >
-            <X className="w-4 h-4" aria-hidden="true" />
+            <X className="w-3.5 h-3.5" aria-hidden="true" />
           </button>
         </div>
 
         {/* Image Preview & Navigation */}
-        <div className="relative flex-1 bg-black flex items-center justify-center min-h-[420px] max-h-[65vh] p-4 overflow-hidden select-none">
+        <div className="relative flex-1 bg-black flex items-center justify-center min-h-[400px] max-h-[62vh] p-4 overflow-hidden select-none">
           <img
             src={currentUrl}
             alt={`${title} - 图片 ${currentIndex + 1}`}
-            className="max-h-full max-w-full object-contain rounded-xl shadow-lg"
+            className="max-h-full max-w-full object-contain"
           />
 
           {pics.length > 1 && (
@@ -75,17 +75,17 @@ export const ImageGalleryModal: React.FC<ImageGalleryModalProps> = ({
                 type="button"
                 onClick={handlePrev}
                 aria-label="查看上一张图片"
-                className="absolute left-4 w-10 h-10 rounded-full bg-slate-900/70 hover:bg-slate-800 text-white flex items-center justify-center backdrop-blur-sm focus-visible:ring-2 focus-visible:ring-violet-500 focus-visible:outline-none transition-transform border border-slate-700/50 hover:scale-105"
+                className="absolute left-3 w-8 h-8 rounded-full bg-black/60 hover:bg-black text-white flex items-center justify-center border border-white/20 transition-colors"
               >
-                <ChevronLeft className="w-5 h-5" aria-hidden="true" />
+                <ChevronLeft className="w-4 h-4" aria-hidden="true" />
               </button>
               <button
                 type="button"
                 onClick={handleNext}
                 aria-label="查看下一张图片"
-                className="absolute right-4 w-10 h-10 rounded-full bg-slate-900/70 hover:bg-slate-800 text-white flex items-center justify-center backdrop-blur-sm focus-visible:ring-2 focus-visible:ring-violet-500 focus-visible:outline-none transition-transform border border-slate-700/50 hover:scale-105"
+                className="absolute right-3 w-8 h-8 rounded-full bg-black/60 hover:bg-black text-white flex items-center justify-center border border-white/20 transition-colors"
               >
-                <ChevronRight className="w-5 h-5" aria-hidden="true" />
+                <ChevronRight className="w-4 h-4" aria-hidden="true" />
               </button>
             </>
           )}
@@ -93,16 +93,16 @@ export const ImageGalleryModal: React.FC<ImageGalleryModalProps> = ({
 
         {/* Thumbnail Strip */}
         {pics.length > 1 && (
-          <div className="flex items-center gap-2 px-5 py-2.5 overflow-x-auto bg-slate-950/60 border-t border-slate-800/60">
+          <div className="flex items-center gap-1.5 px-4 py-2 overflow-x-auto bg-[var(--bg-deep)] border-t border-[var(--card-border)]">
             {pics.map((url, idx) => (
               <button
                 type="button"
                 key={idx}
                 onClick={() => setCurrentIndex(idx)}
                 aria-label={`切换到第 ${idx + 1} 张图片`}
-                className={`relative w-12 h-12 rounded-lg overflow-hidden shrink-0 border-2 focus-visible:ring-2 focus-visible:ring-violet-500 focus-visible:outline-none transition-all ${
+                className={`relative w-10 h-10 rounded overflow-hidden shrink-0 border transition-all ${
                   currentIndex === idx
-                    ? "border-violet-500 scale-105 shadow-md shadow-violet-500/30"
+                    ? "border-amber-500 scale-105"
                     : "border-transparent opacity-60 hover:opacity-100"
                 }`}
               >
@@ -118,11 +118,11 @@ export const ImageGalleryModal: React.FC<ImageGalleryModalProps> = ({
         )}
 
         {/* Footer Actions */}
-        <div className="flex items-center justify-between px-5 py-3 border-t border-slate-800 bg-slate-900/80">
+        <div className="flex items-center justify-between px-4 py-2.5 border-t border-[var(--card-border)] bg-[var(--raised-bg)]">
           <button
             type="button"
             onClick={onClose}
-            className="px-4 py-1.5 text-xs font-medium text-slate-300 hover:text-white hover:bg-slate-800 focus-visible:ring-2 focus-visible:ring-violet-500 focus-visible:outline-none rounded-xl transition-colors"
+            className="px-3 py-1.5 text-xs text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:bg-[var(--card-bg)] border border-[var(--card-border)] rounded-md transition-colors"
           >
             关闭
           </button>
@@ -130,7 +130,7 @@ export const ImageGalleryModal: React.FC<ImageGalleryModalProps> = ({
             <button
               type="button"
               onClick={() => onDownloadSingle(currentUrl, currentIndex)}
-              className="px-4 py-1.5 text-xs font-semibold text-violet-300 bg-violet-950/70 hover:bg-violet-900/80 focus-visible:ring-2 focus-visible:ring-violet-500 focus-visible:outline-none border border-violet-700/50 rounded-xl flex items-center gap-1.5 transition-colors"
+              className="px-3 py-1.5 text-xs text-[var(--text-secondary)] hover:text-[var(--text-primary)] bg-[var(--card-bg)] border border-[var(--card-border)] rounded-md flex items-center gap-1.5 transition-colors"
             >
               <Download className="w-3.5 h-3.5" aria-hidden="true" />
               <span>下载当前原图</span>
@@ -139,10 +139,10 @@ export const ImageGalleryModal: React.FC<ImageGalleryModalProps> = ({
               <button
                 type="button"
                 onClick={onDownloadAll}
-                className="px-4 py-1.5 text-xs font-semibold text-white bg-violet-600 hover:bg-violet-500 focus-visible:ring-2 focus-visible:ring-violet-500 focus-visible:ring-offset-2 focus-visible:outline-none rounded-xl shadow-md shadow-violet-600/30 flex items-center gap-1.5 transition-transform active:scale-95"
+                className="px-3.5 py-1.5 text-xs font-medium text-white bg-amber-600 hover:bg-amber-700 dark:bg-amber-500 dark:hover:bg-amber-600 dark:text-zinc-950 rounded-md flex items-center gap-1.5 transition-colors"
               >
                 <Download className="w-3.5 h-3.5" aria-hidden="true" />
-                <span>批量下载全部 ({pics.length}张)</span>
+                <span>批量下载全部 ({pics.length} 张)</span>
               </button>
             )}
           </div>

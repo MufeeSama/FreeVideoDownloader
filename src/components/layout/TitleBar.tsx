@@ -6,7 +6,7 @@ import {
   X,
   Sun,
   Moon,
-  Video,
+  Film,
   Settings,
   FolderOpen,
 } from "lucide-react";
@@ -77,34 +77,33 @@ export const TitleBar: React.FC<TitleBarProps> = ({
     }
   };
 
-
   return (
     <header
       data-tauri-drag-region
-      className="h-11 w-full flex items-center justify-between px-3.5 select-none border-b border-slate-200/60 dark:border-slate-800/60 bg-white/65 dark:bg-slate-900/65 backdrop-blur-2xl z-50 fixed top-0 left-0 right-0"
+      className="h-10 w-full flex items-center justify-between px-3 select-none border-b border-[var(--card-border)] bg-[#fdfbf7] dark:bg-[#12110f] z-50 fixed top-0 left-0 right-0"
     >
       {/* Left: App Logo & Title */}
-      <div className="flex items-center gap-2.5 pointer-events-none" data-tauri-drag-region>
-        <div className="w-6 h-6 rounded-lg bg-gradient-to-tr from-indigo-600 via-violet-600 to-indigo-500 flex items-center justify-center text-white shadow-sm shadow-indigo-500/30">
-          <Video className="w-3.5 h-3.5" aria-hidden="true" />
+      <div className="flex items-center gap-2 pointer-events-none" data-tauri-drag-region>
+        <div className="w-5 h-5 rounded bg-[#efe9df] dark:bg-[#262421] border border-[var(--card-border)] flex items-center justify-center text-amber-600 dark:text-amber-500">
+          <Film className="w-3 h-3" aria-hidden="true" />
         </div>
-        <span className="text-xs font-semibold tracking-tight text-slate-800 dark:text-slate-200">
+        <span className="text-xs font-medium text-[var(--text-primary)]">
           Free Video Downloader
         </span>
-        <span className="text-[10px] font-mono px-1.5 py-0.5 rounded-full bg-indigo-50 dark:bg-indigo-950/60 text-indigo-600 dark:text-indigo-400 font-medium border border-indigo-200/40 dark:border-indigo-800/40">
+        <span className="text-[10px] font-mono text-[var(--text-muted)]">
           v1.0
         </span>
       </div>
 
       {/* Right: Actions & Window Controls */}
-      <div className="flex items-center gap-1">
+      <div className="flex items-center gap-0.5">
         {/* Open Download Directory Button */}
         <button
           type="button"
           onClick={onOpenFolder}
-          title="打开默认下载目录"
-          aria-label="打开默认下载目录"
-          className="w-7 h-7 flex items-center justify-center rounded-lg text-slate-500 hover:text-slate-800 dark:text-slate-400 dark:hover:text-slate-100 hover:bg-slate-100/80 dark:hover:bg-slate-800/80 active:scale-95 focus-visible:ring-2 focus-visible:ring-indigo-500 focus-visible:outline-none transition-colors"
+          title="打开下载目录"
+          aria-label="打开下载目录"
+          className="w-7 h-7 flex items-center justify-center rounded text-[var(--text-muted)] hover:text-[var(--text-primary)] hover:bg-[var(--raised-bg)] focus-visible:ring-1 focus-visible:ring-amber-500 focus-visible:outline-none transition-colors"
         >
           <FolderOpen className="w-3.5 h-3.5" aria-hidden="true" />
         </button>
@@ -113,14 +112,14 @@ export const TitleBar: React.FC<TitleBarProps> = ({
         <button
           type="button"
           onClick={onToggleTheme}
-          title={isDark ? "切换为浅色主题" : "切换为深色主题"}
-          aria-label={isDark ? "切换为浅色主题" : "切换为深色主题"}
-          className="w-7 h-7 flex items-center justify-center rounded-lg text-slate-500 hover:text-slate-800 dark:text-slate-400 dark:hover:text-slate-100 hover:bg-slate-100/80 dark:hover:bg-slate-800/80 active:scale-95 focus-visible:ring-2 focus-visible:ring-indigo-500 focus-visible:outline-none transition-colors"
+          title={isDark ? "浅色主题" : "深色主题"}
+          aria-label={isDark ? "浅色主题" : "深色主题"}
+          className="w-7 h-7 flex items-center justify-center rounded text-[var(--text-muted)] hover:text-[var(--text-primary)] hover:bg-[var(--raised-bg)] focus-visible:ring-1 focus-visible:ring-amber-500 focus-visible:outline-none transition-colors"
         >
           {isDark ? (
-            <Sun className="w-3.5 h-3.5 text-amber-400" aria-hidden="true" />
+            <Sun className="w-3.5 h-3.5" aria-hidden="true" />
           ) : (
-            <Moon className="w-3.5 h-3.5 text-slate-600" aria-hidden="true" />
+            <Moon className="w-3.5 h-3.5" aria-hidden="true" />
           )}
         </button>
 
@@ -128,22 +127,22 @@ export const TitleBar: React.FC<TitleBarProps> = ({
         <button
           type="button"
           onClick={onOpenSettings}
-          title="偏好设置"
-          aria-label="偏好设置"
-          className="w-7 h-7 flex items-center justify-center rounded-lg text-slate-500 hover:text-slate-800 dark:text-slate-400 dark:hover:text-slate-100 hover:bg-slate-100/80 dark:hover:bg-slate-800/80 active:scale-95 focus-visible:ring-2 focus-visible:ring-indigo-500 focus-visible:outline-none transition-colors mr-1.5"
+          title="设置"
+          aria-label="设置"
+          className="w-7 h-7 flex items-center justify-center rounded text-[var(--text-muted)] hover:text-[var(--text-primary)] hover:bg-[var(--raised-bg)] focus-visible:ring-1 focus-visible:ring-amber-500 focus-visible:outline-none transition-colors mr-1"
         >
           <Settings className="w-3.5 h-3.5" aria-hidden="true" />
         </button>
 
-        <div className="h-3.5 w-[1px] bg-slate-200 dark:bg-slate-800 mr-1" aria-hidden="true" />
+        <div className="h-3 w-[1px] bg-[var(--card-border)] mr-1" aria-hidden="true" />
 
         {/* Minimize Button */}
         <button
           type="button"
           onClick={handleMinimize}
-          title="最小化窗口"
-          aria-label="最小化窗口"
-          className="w-7 h-7 flex items-center justify-center rounded-lg text-slate-500 hover:text-slate-800 dark:text-slate-400 dark:hover:text-slate-100 hover:bg-slate-100/80 dark:hover:bg-slate-800/80 active:scale-95 focus-visible:ring-2 focus-visible:ring-indigo-500 focus-visible:outline-none transition-colors"
+          title="最小化"
+          aria-label="最小化"
+          className="w-7 h-7 flex items-center justify-center rounded text-[var(--text-muted)] hover:text-[var(--text-primary)] hover:bg-[var(--raised-bg)] focus-visible:ring-1 focus-visible:ring-amber-500 focus-visible:outline-none transition-colors"
         >
           <Minus className="w-3.5 h-3.5" aria-hidden="true" />
         </button>
@@ -152,9 +151,9 @@ export const TitleBar: React.FC<TitleBarProps> = ({
         <button
           type="button"
           onClick={handleToggleMaximize}
-          title={isMaximized ? "还原窗口" : "最大化窗口"}
-          aria-label={isMaximized ? "还原窗口" : "最大化窗口"}
-          className="w-7 h-7 flex items-center justify-center rounded-lg text-slate-500 hover:text-slate-800 dark:text-slate-400 dark:hover:text-slate-100 hover:bg-slate-100/80 dark:hover:bg-slate-800/80 active:scale-95 focus-visible:ring-2 focus-visible:ring-indigo-500 focus-visible:outline-none transition-colors"
+          title={isMaximized ? "还原" : "最大化"}
+          aria-label={isMaximized ? "还原" : "最大化"}
+          className="w-7 h-7 flex items-center justify-center rounded text-[var(--text-muted)] hover:text-[var(--text-primary)] hover:bg-[var(--raised-bg)] focus-visible:ring-1 focus-visible:ring-amber-500 focus-visible:outline-none transition-colors"
         >
           <Square className="w-3 h-3" aria-hidden="true" />
         </button>
@@ -163,9 +162,9 @@ export const TitleBar: React.FC<TitleBarProps> = ({
         <button
           type="button"
           onClick={handleClose}
-          title="关闭窗口"
-          aria-label="关闭窗口"
-          className="w-7 h-7 flex items-center justify-center rounded-lg text-slate-500 hover:text-white hover:bg-rose-500 dark:text-slate-400 dark:hover:bg-rose-600 active:scale-95 focus-visible:ring-2 focus-visible:ring-rose-500 focus-visible:outline-none transition-colors"
+          title="关闭"
+          aria-label="关闭"
+          className="w-7 h-7 flex items-center justify-center rounded text-[var(--text-muted)] hover:text-white hover:bg-[#e5484d] dark:hover:bg-[#e5484d] focus-visible:ring-1 focus-visible:ring-[#e5484d] focus-visible:outline-none transition-colors"
         >
           <X className="w-3.5 h-3.5" aria-hidden="true" />
         </button>

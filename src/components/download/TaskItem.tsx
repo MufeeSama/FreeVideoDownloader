@@ -41,32 +41,32 @@ export const TaskItem: React.FC<TaskItemProps> = ({
   const getIcon = () => {
     switch (task.media_type) {
       case "image":
-        return <ImageIcon className="w-4 h-4 text-emerald-500" aria-hidden="true" />;
+        return <ImageIcon className="w-3.5 h-3.5 text-[var(--text-muted)]" aria-hidden="true" />;
       case "audio":
-        return <Music className="w-4 h-4 text-pink-500" aria-hidden="true" />;
+        return <Music className="w-3.5 h-3.5 text-[var(--text-muted)]" aria-hidden="true" />;
       default:
-        return <Film className="w-4 h-4 text-indigo-500" aria-hidden="true" />;
+        return <Film className="w-3.5 h-3.5 text-[var(--text-muted)]" aria-hidden="true" />;
     }
   };
 
   return (
-    <div className="p-4 rounded-2xl bg-white/70 dark:bg-slate-900/70 border border-slate-200/80 dark:border-slate-800/80 shadow-sm flex flex-col gap-2.5 transition-all hover:border-indigo-500/40">
+    <div className="p-3.5 rounded-xl bg-[var(--card-bg)] border border-[var(--card-border)] flex flex-col gap-2 transition-colors">
       {/* Top Header */}
       <div className="flex items-center justify-between gap-3">
         <div className="flex items-center gap-2.5 min-w-0 flex-1">
-          <div className="w-8 h-8 rounded-xl bg-slate-100 dark:bg-slate-800/90 border border-slate-200/50 dark:border-slate-700/50 flex items-center justify-center shrink-0">
+          <div className="w-7 h-7 rounded bg-[var(--raised-bg)] border border-[var(--card-border)] flex items-center justify-center shrink-0">
             {getIcon()}
           </div>
           <div className="min-w-0 flex-1">
-            <h4 className="text-xs font-semibold text-slate-800 dark:text-slate-200 truncate tracking-tight">
+            <h4 className="text-xs font-medium text-[var(--text-primary)] truncate">
               {task.title}
             </h4>
-            <div className="flex items-center gap-2 mt-0.5">
-              <span className="text-[10px] font-mono text-slate-400">
+            <div className="flex items-center gap-1.5 mt-0.5">
+              <span className="text-[10px] font-mono text-[var(--text-muted)]">
                 {task.platform.toUpperCase()}
               </span>
               {task.quality && (
-                <span className="text-[10px] px-1.5 py-0.2 rounded-md bg-indigo-50 dark:bg-indigo-950/60 text-indigo-600 dark:text-indigo-400 font-medium border border-indigo-200/40 dark:border-indigo-800/40">
+                <span className="text-[10px] px-1.5 py-0.2 rounded bg-[var(--raised-bg)] text-[var(--text-muted)] font-mono border border-[var(--card-border)]">
                   {task.quality}
                 </span>
               )}
@@ -75,18 +75,18 @@ export const TaskItem: React.FC<TaskItemProps> = ({
         </div>
 
         {/* Status / Action Controls */}
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-1.5">
           {isHistory ? (
             <>
               {task.status === "completed" && (
-                <span className="text-xs text-emerald-500 flex items-center gap-1 font-medium bg-emerald-50 dark:bg-emerald-950/40 px-2 py-0.5 rounded-md border border-emerald-200/40 dark:border-emerald-800/30">
-                  <CheckCircle2 className="w-3.5 h-3.5" aria-hidden="true" />
+                <span className="text-xs text-emerald-600 dark:text-emerald-400 flex items-center gap-1 font-mono bg-emerald-500/10 px-2 py-0.5 rounded border border-emerald-500/20">
+                  <CheckCircle2 className="w-3 h-3" aria-hidden="true" />
                   <span>已完成</span>
                 </span>
               )}
               {task.status === "failed" && (
-                <span className="text-xs text-rose-500 flex items-center gap-1 font-medium bg-rose-50 dark:bg-rose-950/40 px-2 py-0.5 rounded-md border border-rose-200/40 dark:border-rose-800/30">
-                  <AlertCircle className="w-3.5 h-3.5" aria-hidden="true" />
+                <span className="text-xs text-[#e5484d] flex items-center gap-1 font-mono bg-[#e5484d]/10 px-2 py-0.5 rounded border border-[#e5484d]/20">
+                  <AlertCircle className="w-3 h-3" aria-hidden="true" />
                   <span>失败</span>
                 </span>
               )}
@@ -95,15 +95,15 @@ export const TaskItem: React.FC<TaskItemProps> = ({
                 onClick={() => tauriApi.openInExplorer(task.save_path)}
                 title="在资源管理器中定位"
                 aria-label={`在资源管理器中定位 ${task.title}`}
-                className="p-1.5 rounded-lg text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800 active:scale-95 focus-visible:ring-2 focus-visible:ring-indigo-500 focus-visible:outline-none transition-colors"
+                className="p-1.5 rounded text-[var(--text-muted)] hover:text-[var(--text-primary)] hover:bg-[var(--raised-bg)] transition-colors"
               >
-                <FolderOpen className="w-4 h-4" aria-hidden="true" />
+                <FolderOpen className="w-3.5 h-3.5" aria-hidden="true" />
               </button>
             </>
           ) : (
             <>
-              <span className="text-xs font-mono tabular-nums text-indigo-600 dark:text-indigo-400 font-semibold flex items-center gap-1.5 bg-indigo-50 dark:bg-indigo-950/50 px-2 py-0.5 rounded-md border border-indigo-200/40 dark:border-indigo-800/40">
-                <Loader2 className="w-3.5 h-3.5 animate-spin" aria-hidden="true" />
+              <span className="text-xs font-mono tabular-nums text-amber-600 dark:text-amber-500 flex items-center gap-1 bg-[var(--raised-bg)] px-2 py-0.5 rounded border border-[var(--card-border)]">
+                <Loader2 className="w-3 h-3 animate-spin" aria-hidden="true" />
                 <span>{formatSpeed(task.speed)}</span>
               </span>
               {onCancel && (
@@ -112,7 +112,7 @@ export const TaskItem: React.FC<TaskItemProps> = ({
                   onClick={() => onCancel(task.id)}
                   title="取消任务"
                   aria-label={`取消下载任务 ${task.title}`}
-                  className="p-1.5 rounded-lg text-slate-400 hover:text-rose-500 hover:bg-rose-50 dark:hover:bg-rose-950/40 active:scale-95 focus-visible:ring-2 focus-visible:ring-rose-500 focus-visible:outline-none transition-colors"
+                  className="p-1 rounded text-[var(--text-muted)] hover:text-[#e5484d] hover:bg-[var(--raised-bg)] transition-colors"
                 >
                   <X className="w-3.5 h-3.5" aria-hidden="true" />
                 </button>
@@ -124,14 +124,14 @@ export const TaskItem: React.FC<TaskItemProps> = ({
 
       {/* Progress Bar & Details */}
       {!isHistory && (
-        <div className="space-y-1.5">
-          <div className="w-full h-1.5 rounded-full bg-slate-100 dark:bg-slate-800 overflow-hidden relative">
+        <div className="space-y-1">
+          <div className="w-full h-1.5 rounded bg-[var(--raised-bg)] border border-[var(--card-border)] overflow-hidden">
             <div
-              className="h-full bg-gradient-to-r from-indigo-600 via-violet-500 to-indigo-500 rounded-full transition-all duration-200 animate-shimmer"
+              className="h-full bg-amber-600 dark:bg-amber-500 rounded transition-[width] duration-150"
               style={{ width: `${Math.min(100, Math.max(0, task.progress || 0))}%` }}
             />
           </div>
-          <div className="flex items-center justify-between text-[10px] text-slate-400 font-mono tabular-nums">
+          <div className="flex items-center justify-between text-[10px] text-[var(--text-muted)] font-mono tabular-nums">
             <span>
               {formatBytes(task.downloaded_bytes)} / {formatBytes(task.total_bytes)}
             </span>

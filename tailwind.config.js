@@ -5,23 +5,29 @@ export default {
   theme: {
     extend: {
       colors: {
-        brand: {
-          50: "#f5f3ff",
-          100: "#ede9fe",
-          200: "#ddd6fe",
-          300: "#c4b5fd",
-          400: "#a78bfa",
-          500: "#8b5cf6",
-          600: "#7c3aed",
-          700: "#6d28d9",
-          800: "#5b21b6",
-          900: "#4c1d95",
+        warm: {
+          bg: "var(--bg-main)",
+          deep: "var(--bg-deep)",
+          card: "var(--card-bg)",
+          raised: "var(--raised-bg)",
+          border: "var(--card-border)",
+          primary: "var(--text-primary)",
+          secondary: "var(--text-secondary)",
+          muted: "var(--text-muted)",
+        },
+        accent: {
+          DEFAULT: "var(--accent)",
+          hover: "var(--accent-hover)",
+          light: "var(--accent-light)",
         }
       },
+      fontFamily: {
+        sans: ['"Inter"', '"PingFang SC"', '"Hiragino Sans GB"', '"Microsoft YaHei"', 'system-ui', 'sans-serif'],
+        mono: ['"JetBrains Mono"', '"SF Mono"', 'ui-monospace', 'monospace'],
+      },
       animation: {
-        "fade-in": "fadeIn 0.2s ease-in-out",
-        "slide-up": "slideUp 0.3s cubic-bezier(0.16, 1, 0.3, 1)",
-        "pulse-subtle": "pulseSubtle 2s cubic-bezier(0.4, 0, 0.6, 1) infinite",
+        "fade-in": "fadeIn 0.15s ease-out",
+        "slide-up": "slideUp 0.2s ease-out",
       },
       keyframes: {
         fadeIn: {
@@ -29,13 +35,9 @@ export default {
           "100%": { opacity: "1" },
         },
         slideUp: {
-          "0%": { opacity: "0", transform: "translateY(12px)" },
+          "0%": { opacity: "0", transform: "translateY(6px)" },
           "100%": { opacity: "1", transform: "translateY(0)" },
         },
-        pulseSubtle: {
-          "0%, 100%": { opacity: "1" },
-          "50%": { opacity: "0.7" },
-        }
       }
     },
   },

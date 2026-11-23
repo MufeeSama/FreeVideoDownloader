@@ -16,20 +16,20 @@ export const DownloadQueue: React.FC<DownloadQueueProps> = ({ tasks, onCancel })
       role="region"
       aria-label="正在下载队列"
       aria-live="polite"
-      className="w-full glass-panel p-6 rounded-3xl shadow-xl border border-slate-200/80 dark:border-slate-800/80 animate-slide-up"
+      className="w-full film-panel p-5 rounded-2xl animate-slide-up"
     >
-      <div className="flex items-center justify-between mb-4">
+      <div className="flex items-center justify-between mb-3.5">
         <div className="flex items-center gap-2">
-          <div className="w-7 h-7 rounded-lg bg-violet-100 dark:bg-violet-950/80 flex items-center justify-center text-violet-600 dark:text-violet-400">
-            <ArrowDownCircle className="w-4 h-4 animate-bounce" aria-hidden="true" />
+          <div className="w-6 h-6 rounded bg-[var(--raised-bg)] border border-[var(--card-border)] flex items-center justify-center text-amber-600 dark:text-amber-500">
+            <ArrowDownCircle className="w-3.5 h-3.5" aria-hidden="true" />
           </div>
-          <h3 className="text-sm font-bold text-slate-900 dark:text-slate-100">
-            当前正在下载 ({tasks.length})
+          <h3 className="text-xs font-semibold text-[var(--text-primary)]">
+            当前下载任务 ({tasks.length})
           </h3>
         </div>
       </div>
 
-      <div className="space-y-3">
+      <div className="space-y-2.5">
         {tasks.map((t) => (
           <TaskItem key={t.id} task={t} onCancel={onCancel} />
         ))}
