@@ -14,7 +14,7 @@ import { useDownloadManager } from "./hooks/useDownloadManager";
 import { tauriApi } from "./services/tauriApi";
 import { VideoParseResult } from "./types";
 import { Toaster, toast } from "sonner";
-import { Sparkles, History as HistoryIcon, Download } from "lucide-react";
+import { Film, History as HistoryIcon, Download } from "lucide-react";
 
 export default function App() {
   const { theme, isDark, setTheme, toggleTheme } = useTheme();
@@ -44,20 +44,10 @@ export default function App() {
     (t) => t.status === "downloading" || t.status === "paused"
   ).length;
 
-  const isBusy = isParsing || activeDownloadCount > 0;
-
-  // 拦截应用退出，如果有正在进行的任务则弹窗二次确认
-  const handleRequestClose = useCallback(async () => {
-    if (isBusy) {
-      setIsExitModalOpen(true);
-    } else {
-      try {
-        await getCurrentWindow().close();
-      } catch (e) {
-        console.warn(e);
-      }
-    }
-  }, [isBusy]);
+  // 拦截应用退出，始终弹窗二次确认（无论是否有进行中的任务）
+  const handleRequestClose = useCallback(() => {
+    setIsExitModalOpen(true);
+  }, []);
 
 
   const handleConfirmExit = async () => {
@@ -74,10 +64,9 @@ export default function App() {
       try {
         const appWindow = getCurrentWindow();
         unlisten = await appWindow.onCloseRequested((event) => {
-          if (isBusy) {
-            event.preventDefault();
-            setIsExitModalOpen(true);
-          }
+          // 始终拦截系统关闭，弹出确认框（无论是否有进行中的任务）
+          event.preventDefault();
+          setIsExitModalOpen(true);
         });
       } catch (e) {
         console.warn("Failed to listen onCloseRequested:", e);
@@ -87,7 +76,7 @@ export default function App() {
     return () => {
       if (unlisten) unlisten();
     };
-  }, [isBusy]);
+  }, []);
 
   // 执行短视频链接解析
   const handleParse = async (urlToParse?: string) => {
@@ -192,7 +181,7 @@ export default function App() {
   };
 
   return (
-    <div className="flex flex-col h-screen w-screen bg-slate-50 dark:bg-[#0b0f19] text-slate-900 dark:text-slate-100 overflow-hidden font-sans select-none ambient-bg">
+    <div className="flex flex-col h-screen w-screen bg-[var(--bg-main)] text-[var(--text-primary)] overflow-hidden font-sans select-none">
       {/* Hidden main h1 for screen readers and SEO semantics */}
       <h1 className="sr-only">Free Video Downloader - 社交平台无水印短视频图集下载器</h1>
 
@@ -207,37 +196,37 @@ export default function App() {
       />
 
       {/* Main Content Area */}
-      <main className="flex-1 overflow-y-auto pt-16 pb-8 px-6 max-w-5xl w-full mx-auto space-y-6">
+      <main className="flex-1 overflow-y-auto pt-14 pb-8 px-6 max-w-4xl w-full mx-auto space-y-5">
         {/* Navigation Tabs */}
         <nav aria-label="页面功能导航" className="flex items-center justify-between">
-          <div className="flex items-center gap-1.5 p-1 rounded-2xl bg-slate-200/50 dark:bg-slate-800/50 backdrop-blur-xl border border-slate-200/50 dark:border-slate-700/50">
+          <div className="flex items-center gap-1 p-0.5 rounded-lg bg-[var(--raised-bg)] border border-[var(--card-border)]">
             <button
               type="button"
               aria-pressed={activeTab === "downloader"}
               onClick={() => setActiveTab("downloader")}
-              className={`px-4 py-2 rounded-xl text-xs font-semibold flex items-center gap-1.5 active:scale-95 focus-visible:ring-2 focus-visible:ring-indigo-500 focus-visible:outline-none transition-all ${
+              className={`px-3 py-1.5 rounded-md text-xs font-medium flex items-center gap-1.5 focus-visible:ring-1 focus-visible:ring-amber-500 focus-visible:outline-none transition-colors ${
                 activeTab === "downloader"
-                  ? "bg-white dark:bg-slate-900 text-indigo-600 dark:text-indigo-400 shadow-sm"
-                  : "text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200"
+                  ? "bg-[var(--card-bg)] text-[var(--text-primary)] border border-[var(--card-border)] shadow-xs"
+                  : "text-[var(--text-muted)] hover:text-[var(--text-primary)]"
               }`}
             >
-              <Sparkles className="w-4 h-4" aria-hidden="true" />
-              <span>视频提取下载</span>
+              <Film className="w-3.5 h-3.5" aria-hidden="true" />
+              <span>视频解析提取</span>
             </button>
             <button
               type="button"
               aria-pressed={activeTab === "history"}
               onClick={() => setActiveTab("history")}
-              className={`px-4 py-2 rounded-xl text-xs font-semibold flex items-center gap-1.5 active:scale-95 focus-visible:ring-2 focus-visible:ring-indigo-500 focus-visible:outline-none transition-all ${
+              className={`px-3 py-1.5 rounded-md text-xs font-medium flex items-center gap-1.5 focus-visible:ring-1 focus-visible:ring-amber-500 focus-visible:outline-none transition-colors ${
                 activeTab === "history"
-                  ? "bg-white dark:bg-slate-900 text-indigo-600 dark:text-indigo-400 shadow-sm"
-                  : "text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200"
+                  ? "bg-[var(--card-bg)] text-[var(--text-primary)] border border-[var(--card-border)] shadow-xs"
+                  : "text-[var(--text-muted)] hover:text-[var(--text-primary)]"
               }`}
             >
-              <HistoryIcon className="w-4 h-4" aria-hidden="true" />
-              <span>下载历史记录</span>
+              <HistoryIcon className="w-3.5 h-3.5" aria-hidden="true" />
+              <span>下载记录</span>
               {history.length > 0 && (
-                <span className="ml-1 px-1.5 py-0.2 rounded-full text-[10px] bg-slate-100 dark:bg-slate-800 text-slate-500 font-mono tabular-nums">
+                <span className="ml-1 px-1.5 py-0.2 rounded text-[10px] bg-[var(--bg-main)] text-[var(--text-muted)] font-mono tabular-nums border border-[var(--card-border)]">
                   {history.length}
                 </span>
               )}
@@ -248,10 +237,10 @@ export default function App() {
             <div
               role="status"
               aria-live="polite"
-              className="flex items-center gap-2 px-3.5 py-1.5 rounded-xl bg-indigo-50 dark:bg-indigo-950/60 border border-indigo-200/60 dark:border-indigo-800/60 text-indigo-600 dark:text-indigo-400 text-xs font-semibold shadow-sm"
+              className="flex items-center gap-2 px-2.5 py-1 rounded-md bg-[var(--card-bg)] border border-[var(--card-border)] text-amber-600 dark:text-amber-500 text-xs font-medium"
             >
-              <Download className="w-3.5 h-3.5 animate-bounce" aria-hidden="true" />
-              <span className="tabular-nums">正在下载 {tasks.length} 个任务</span>
+              <Download className="w-3.5 h-3.5" aria-hidden="true" />
+              <span className="tabular-nums">正在下载 {tasks.length} 项</span>
             </div>
           )}
         </nav>
