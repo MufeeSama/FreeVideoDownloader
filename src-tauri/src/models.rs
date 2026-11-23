@@ -28,6 +28,16 @@ pub struct VideoParseResult {
 }
 
 #[derive(Debug, Deserialize)]
+pub struct EntitlementResponse {
+    pub success: bool,
+    #[serde(rename = "quoteToken")]
+    pub quote_token: Option<String>,
+    pub data: Option<serde_json::Value>,
+    pub message: Option<String>,
+    pub error: Option<String>,
+}
+
+#[derive(Debug, Deserialize)]
 pub struct GateResponse {
     pub success: bool,
     #[serde(rename = "tk_e5eea8")]
@@ -44,5 +54,13 @@ pub struct RawParseApiResponse {
     pub encrypt: Option<bool>,
     pub data: Option<serde_json::Value>,
     pub key: Option<String>,
+    pub error: Option<String>,
+}
+
+#[derive(Debug, Deserialize)]
+pub struct RawMoreSizeResponse {
+    pub encrypt: Option<bool>,
+    pub data: Option<String>,
+    pub iv: Option<String>,
     pub error: Option<String>,
 }
